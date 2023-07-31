@@ -18,10 +18,10 @@
     "WebStatus": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "http://localhost:50880",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:50880"
+      }
     }
   }
 }

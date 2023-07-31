@@ -8,6 +8,7 @@
     <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Microsoft.eShopOnContainers.WebMVC' " />
   <ItemGroup>
     <Content Include="Setup\images.zip">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

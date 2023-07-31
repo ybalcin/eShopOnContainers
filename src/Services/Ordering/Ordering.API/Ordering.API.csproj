@@ -8,6 +8,7 @@
     <RootNamespace>Microsoft.eShopOnContainers.Services.Ordering.API</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Ordering.API' " />
   <ItemGroup>
     <Content Include="Setup\**\*;">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
