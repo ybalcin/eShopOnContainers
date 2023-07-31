@@ -39,7 +39,7 @@ public class OrderController : Controller
                 await _basketSvc.Checkout(basket);
 
                 //Redirect to historic list.
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
         }
         catch (Exception ex)
@@ -55,7 +55,7 @@ public class OrderController : Controller
         await _orderSvc.CancelOrder(orderId);
 
         //Redirect to historic list.
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> Detail(string orderId)
@@ -71,5 +71,12 @@ public class OrderController : Controller
         var user = _appUserParser.Parse(HttpContext.User);
         var vm = await _orderSvc.GetMyOrders(user);
         return View(vm);
+    }
+
+    public async Task<IActionResult> Complete(string orderId)
+    {
+        await _orderSvc.CompleteOrder(orderId);
+
+        return RedirectToAction(nameof(Index));
     }
 }
