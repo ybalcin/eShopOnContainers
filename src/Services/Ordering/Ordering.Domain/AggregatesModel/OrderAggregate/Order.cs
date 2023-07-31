@@ -14,7 +14,7 @@ public class Order
     public int? GetBuyerId => _buyerId;
     private int? _buyerId;
 
-    public OrderStatus OrderStatus { get; private set; }
+    public OrderStatus OrderStatus { get; set; }
     private int _orderStatusId;
 
     private string _description;

@@ -172,4 +172,50 @@ public class OrderAggregateTest
         //Assert
         Assert.Equal(fakeOrder.DomainEvents.Count, expectedResult);
     }
+
+    [Fact]
+    public void SetCompletedStatus_success()
+    {
+        //Arrange    
+        var street = "fakeStreet";
+        var city = "FakeCity";
+        var state = "fakeState";
+        var country = "fakeCountry";
+        var zipcode = "FakeZipCode";
+        var cardTypeId = 5;
+        var cardNumber = "12";
+        var cardSecurityNumber = "123";
+        var cardHolderName = "FakeName";
+        var cardExpiration = DateTime.Now.AddYears(1);
+        var fakeOrder = new Order("1", "fakeName", new Address(street, city, state, country, zipcode), cardTypeId, cardNumber, cardSecurityNumber, cardHolderName, cardExpiration);
+        var expectedResult = 6;
+        fakeOrder.SetAwaitingValidationStatus();
+        fakeOrder.SetStockConfirmedStatus();
+        fakeOrder.SetPaidStatus();
+        fakeOrder.SetShippedStatus();
+        
+        fakeOrder.SetCompletedStatus();
+
+        Assert.Equal(expectedResult, fakeOrder.DomainEvents.Count);
+    }
+
+    [Fact]
+    public void SetCompletedStatus_should_throw_error_if_current_status_is_not_shipped()
+    {
+        //Arrange    
+        var street = "fakeStreet";
+        var city = "FakeCity";
+        var state = "fakeState";
+        var country = "fakeCountry";
+        var zipcode = "FakeZipCode";
+        var cardTypeId = 5;
+        var cardNumber = "12";
+        var cardSecurityNumber = "123";
+        var cardHolderName = "FakeName";
+        var cardExpiration = DateTime.Now.AddYears(1);
+        var fakeOrder = new Order("1", "fakeName", new Address(street, city, state, country, zipcode), cardTypeId, cardNumber, cardSecurityNumber, cardHolderName, cardExpiration);
+        fakeOrder.OrderStatus = OrderStatus.Submitted;
+        
+        Assert.Throws<OrderingDomainException>(() => fakeOrder.SetCompletedStatus());
+    }
 }
