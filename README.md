@@ -117,3 +117,33 @@ Take a look at the free course [Create and deploy a cloud-native ASP.NET Core mi
 ## Sending feedback and pull requests
 
 Read the planned [Roadmap](https://github.com/dotnet-architecture/eShopOnContainers/wiki/Roadmap) within the Wiki for further info about possible new implementations and provide feedback at the [ISSUES section](https://github.com/dotnet/eShopOnContainers/issues) if you'd like to see any specific scenario implemented or improved. Also, feel free to discuss on any current issue.
+
+## Additional
+
+   CompleteOrderCommand added
+   
+   CompleteOrderCommandHandler added
+   
+   CompleteOrderCommandValidator added
+
+   OrderCompletedDomainEventHandler added
+   
+   OrderCompletedDomainEvent added
+
+   SetCompletedStatus() added to Order aggregate
+
+   Completed OrderStatus added
+   
+   OrderStatusChangedToCompletedIntegrationEvent added
+   
+   CompleteOrderAsync() action added to Ordering.API `PUT api/v1/Orders/complete`
+   
+   Complete action added to MVC
+   
+   CompleteOrder method added to OrderingService at MVC
+   
+   Tests for complete process added to OrderAggregateTest and OrdersWebApiTest
+
+   CompleteOrderCommand > `PUT api/v1/Orders/complete` > CompleteOrderCommandHandler > orderToUpdate.SetCompletedStatus() > OrderRepository
+   
+   After request hits `/complete` with CompleteOrderCommand payload, mediator sends command and CompleteOrderCommandHandler catches. Handler calls SetCompletedStatus() of order obj, it sets order status to completed if current       status is shipped and adds OrderCompletedDomainEvent. After, handler uses repository to store the changes. OrderCompletedDomainEventHandler creates and saves OrderStatusChangedToCompletedIntegrationEvent to database(enqueueing). After enqueueing OrderingIntegrationEventService retrives events and publishes.
