@@ -144,6 +144,8 @@ Read the planned [Roadmap](https://github.com/dotnet-architecture/eShopOnContain
    
    Tests for complete process added to OrderAggregateTest and OrdersWebApiTest
 
+   #### Workflow
+   
    CompleteOrderCommand > `PUT api/v1/Orders/complete` > CompleteOrderCommandHandler > orderToUpdate.SetCompletedStatus() > OrderRepository
    
    After request hits `/complete` with CompleteOrderCommand payload, mediator sends command and CompleteOrderCommandHandler catches. Handler calls SetCompletedStatus() of order obj, it sets order status to completed if current       status is shipped and adds OrderCompletedDomainEvent. After, handler uses repository to store the changes. OrderCompletedDomainEventHandler creates and saves OrderStatusChangedToCompletedIntegrationEvent to database(enqueueing). After enqueueing OrderingIntegrationEventService retrives events and publishes.
